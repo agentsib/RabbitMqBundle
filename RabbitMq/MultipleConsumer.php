@@ -44,6 +44,8 @@ class MultipleConsumer extends Consumer
     {
         $this->mergeQueues();
 
+        $this->resolveQueuesOptions();
+
         if ($this->autoSetupFabric) {
             $this->setupFabric();
         }
@@ -106,6 +108,13 @@ class MultipleConsumer extends Consumer
                 $this->queues,
                 $this->queuesProvider->getQueues()
             );
+        }
+    }
+
+    protected function resolveQueuesOptions()
+    {
+        foreach ($this->queues as &$queue) {
+            $queue = array_merge($this->queueOptions, $queue);
         }
     }
 }
